@@ -19,8 +19,9 @@ define('OCTO_SEO_PLUGIN_URL', plugin_dir_url(__FILE__));
 
 // Load required files
 require_once OCTO_SEO_PLUGIN_DIR . 'inc/class-meta.php';
-require_once OCTO_SEO_PLUGIN_DIR . 'inc/class-admin.php';
 require_once OCTO_SEO_PLUGIN_DIR . 'inc/class-schema.php';
+require_once OCTO_SEO_PLUGIN_DIR . 'inc/admin/class-settings.php';
+require_once OCTO_SEO_PLUGIN_DIR . 'inc/admin/class-admin.php';
 
 /**
  * Initialize the plugin
@@ -30,9 +31,13 @@ function octo_seo_init() {
     $meta = new OctoSEO\Meta();
     $meta->init();
     
+    // Initialize settings (in admin and frontend)
+    $settings = new OctoSEO\Admin\Settings();
+    $settings->init();
+    
     // Initialize admin features (only in admin)
     if (is_admin()) {
-        $admin = new OctoSEO\Admin();
+        $admin = new OctoSEO\Admin\Admin($settings);
         $admin->init();
     }
     
