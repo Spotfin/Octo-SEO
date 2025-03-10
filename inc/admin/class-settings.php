@@ -60,7 +60,6 @@ class Settings {
             [$this, 'render_settings_page']
         );
         
-        // You can add more submenu pages here if needed in the future
     }
     
     /**
@@ -92,10 +91,9 @@ class Settings {
             'octo_seo_post_types_section'
         );
     }
-    
     /**
-     * Render settings page
-     */
+          * Render settings page
+          */
     public function render_settings_page(): void {
         if (!current_user_can('manage_options')) {
             return;
@@ -104,6 +102,9 @@ class Settings {
         ?>
         <div class="wrap">
             <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
+            
+            <?php $this->render_info_panel(); ?>
+            
             <form action="options.php" method="post">
                 <?php
                 settings_fields(self::SETTINGS_PAGE);
@@ -115,6 +116,96 @@ class Settings {
         <?php
     }
     
+    /**
+          * Render information panel
+          */
+    private function render_info_panel(): void {
+        ?>
+        <div class="octo-seo-info-panel">
+            <style>
+                .octo-seo-info-panel {
+                    background: #fff;
+                    border-left: 4px solid #2271b1;
+                    box-shadow: 0 1px 1px rgba(0,0,0,.04);
+                    margin: 20px 0;
+                    padding: 12px 20px;
+                }
+                .octo-seo-info-panel h2 {
+                    margin-top: 0;
+                }
+                .octo-seo-info-panel p {
+                    margin-bottom: 10px;
+                }
+                .octo-seo-info-panel .octo-seo-logo {
+                    float: right;
+                    max-width: 150px;
+                    margin-left: 20px;
+                }
+                .octo-seo-info-panel .octo-seo-info-grid {
+                    display: grid;
+                    grid-template-columns: 1fr 1fr;
+                    grid-gap: 20px;
+                }
+                .octo-seo-info-panel .octo-seo-info-section {
+                    margin-bottom: 15px;
+                }
+                @media (max-width: 782px) {
+                    .octo-seo-info-panel .octo-seo-info-grid {
+                        grid-template-columns: 1fr;
+                    }
+                }
+            </style>
+            
+            <h2><?php _e('About Octo SEO', 'octo-seo'); ?></h2>
+            
+            <div class="octo-seo-info-grid">
+                <div class="octo-seo-info-section">
+                    <h3><?php _e('Plugin Information', 'octo-seo'); ?></h3>
+                    <p>
+                        <?php _e('Octo SEO is a lightweight SEO plugin designed to help you optimize your content for search engines without the bloat of larger SEO plugins.', 'octo-seo'); ?>
+                    </p>
+                    <p>
+                        <?php _e('Version:', 'octo-seo'); ?> <strong><?php echo esc_html(OCTO_SEO_VERSION); ?></strong>
+                    </p>
+                    <p>
+                        <?php _e('Features:', 'octo-seo'); ?>
+                    </p>
+                    <ul>
+                        <li><?php _e('Custom SEO titles for any content', 'octo-seo'); ?></li>
+                        <li><?php _e('Meta descriptions to improve click-through rates', 'octo-seo'); ?></li>
+                        <li><?php _e('Schema.org structured data for better search visibility', 'octo-seo'); ?></li>
+                        <li><?php _e('Works with any post type you choose', 'octo-seo'); ?></li>
+                    </ul>
+                </div>
+                
+                <div class="octo-seo-info-section">
+                    <h3><?php _e('Support Information', 'octo-seo'); ?></h3>
+                    <p>
+                        <?php _e('Developed and maintained by:', 'octo-seo'); ?>
+                        <br>
+                        <a href="https://spotfincreative.com" target="_blank">
+                            <strong>Spotfin Creative</strong>
+                        </a>
+                    </p>
+                    <p>
+                        <?php _e('Need help with this plugin?', 'octo-seo'); ?>
+                        <br>
+                        <?php _e('Contact our support team:', 'octo-seo'); ?>
+                        <br>
+                        <a href="mailto:support@spotfincreative.com">support@spotfincreative.com</a>
+                    </p>
+                    <p>
+                        <?php _e('Visit our website for more WordPress solutions:', 'octo-seo'); ?>
+                        <br>
+                        <a href="https://spotfincreative.com" target="_blank">spotfincreative.com</a>
+                    </p>
+                </div>
+            </div>
+            
+            <div style="clear: both;"></div>
+        </div>
+        <?php
+    }
     /**
      * Render post types section description
      */
